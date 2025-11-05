@@ -32,9 +32,8 @@ body {
 
 
 .login-title {
-  font-family: "Great Vibes", cursive;
   font-size: 2.5rem;
-  color: #b44cff;
+  color: #0f0b12;
   margin-bottom: 30px;
   text-shadow: 0 2px 10px rgba(180, 76, 255, 0.2);
 }
