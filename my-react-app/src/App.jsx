@@ -4,6 +4,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import CreateEvent from "./pages/CreateEvent"
+import SeeEvent from "./pages/SeeEvents"
+
 function App() {
   return (
     <Router>

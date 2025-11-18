@@ -1,0 +1,24 @@
+.events-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.event-item {
+    background: #faf5ff;
+    border: 1px solid #e0c3fc;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 12px rgba(180, 76, 255, 0.15);
+}
+
+.event-item h3 {
+    margin: 0 0 8px;
+    color: #b44cff;
+}
+
+.event-item p {
+    margin: 3px 0;
+}
