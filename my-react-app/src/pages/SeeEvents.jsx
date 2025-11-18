@@ -2,9 +2,10 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 import "../styles/Home.css";
 import "../styles/SeeEvents.css";
-import { useState } from "react";
 
 function SeeEvents(){
+    const navigate = useNavigate();
+
     return (
         <div className="register-page">
             <div className="register-form">
@@ -16,7 +17,7 @@ function SeeEvents(){
                     <p><strong>Location:</strong> Vienna, Austria</p>
                 </div>
 
-                <button className="btn" type="button" onClick={() => navigate("/")}
+                <button className="btn" type="button" onClick={() => navigate("/home")}
                         style={{ marginTop: "20px" }}
                         >Back to Home</button>
             </div>
@@ -24,4 +25,4 @@ function SeeEvents(){
     );
 }
 
-export default SeeEvents();
+export default SeeEvents;

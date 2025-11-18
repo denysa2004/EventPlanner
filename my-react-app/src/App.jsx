@@ -4,7 +4,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import CreateEvent from "./pages/CreateEvent"
-import SeeEvent from "./pages/SeeEvents"
+import SeeEvents from "./pages/SeeEvents"
 
 function App() {
   return (
@@ -14,6 +14,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/home" element={<Home />} />
         <Route path="/create-event" element={<CreateEvent /> }/>
+        <Route path="/see-events" element={<SeeEvents />}/>
       </Routes>
     </Router>
   );
