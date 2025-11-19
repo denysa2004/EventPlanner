@@ -1,0 +1,28 @@
+.multi-select {
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 2px solid #e0c3fc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+  background: white;
+  cursor: pointer;
+  height: 90px;
+  transition: 0.25s ease;
+}
+
+.multi-select:focus {
+  border-color: #b44cff;
+  box-shadow: 0 0 8px rgba(180, 76, 255, 0.3);
+}
+
+.organizers-label {
+  text-align: left;
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #333;
+}
