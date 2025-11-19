@@ -8,6 +8,7 @@ function CreateEvent() {
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const navigate = useNavigate();
 
  
   const organizers = [
@@ -75,6 +76,9 @@ function CreateEvent() {
         </select>
 
         <button type="submit" onSubmit={handleSubmit}>Create</button>
+        <button className="btn1"  onClick={() => navigate("/home")}
+                        style={{ marginTop: "20px"  }}
+                        >Back to Home</button>
       </form>
     </div>
   );
