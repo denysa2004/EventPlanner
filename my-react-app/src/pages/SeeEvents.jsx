@@ -17,7 +17,7 @@ function SeeEvents(){
                     <p><strong>Location:</strong> Vienna, Austria</p>
                 </div>
 
-                <button className="btn" type="button" onClick={() => navigate("/home")}
+                <button className="btn1"  onClick={() => navigate("/home")}
                         style={{ marginTop: "20px" }}
                         >Back to Home</button>
             </div>

@@ -19,7 +19,15 @@ function Home() {
           See Events
         </button>
       </form>
+      <button
+            type="button"
+            className="logout-btn"
+            onClick={() => navigate("/")}
+          >
+            Logout
+          </button>
       </form>
+   
     </div>
   );
 }

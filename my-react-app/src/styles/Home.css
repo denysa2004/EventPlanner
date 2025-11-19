@@ -28,3 +28,23 @@
 .btn:hover {
   background-color: #3867d6;
 }
+.register-form .logout-btn {
+  background: #f79797;
+  color: white;
+  border: none;
+  padding: 10px 0;
+  border-radius: 25px;
+  width: 30%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: 0.25s ease;
+}
+
+
+.register-form .logout-btn:hover {
+  background: #e60000;
+  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+  transform: translateY(-2px);
+}

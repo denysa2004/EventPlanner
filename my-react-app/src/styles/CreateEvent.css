@@ -26,3 +26,17 @@
   font-size: 1rem;
   color: #333;
 }
+.register-form .btn1 {
+  background: rgb(244, 162, 211);
+  color: #faf7fc;
+  border: 2px solid #b44cff;
+  padding: 8px 20px;      
+  border-radius: 20px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  width: 150px;          
+  transition: 0.25s ease;
+  margin-bottom: 0px;
+  margin-top: 50px;
+}
+
