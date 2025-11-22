@@ -30,7 +30,9 @@ function Login() {
       });
 
       if (response.ok) {
-        const data = await response.text();
+        const data = await response.json();
+
+        localStorage.setItem("user", JSON.stringify(data));
         console.log("Login successful:", data);
         setError("");
         setSuccess("Login successful! Redirecting...");
