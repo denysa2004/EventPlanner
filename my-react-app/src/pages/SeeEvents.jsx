@@ -37,6 +37,7 @@ function SeeEvents() {
       }
 
       const data = await response.json();
+      console.log("Fetched events:", data);
       setEvents(data);
       setError(null);
       setLoading(false);
@@ -71,17 +72,24 @@ function SeeEvents() {
         {!loading &&
           !error &&
           events.length > 0 &&
-          events.map((event) => (
-            <div key={event.id} className="event-item">
-              <h3>{event.eventName}</h3>
-              <p>
-                <strong>Date:</strong> {event.eventDate}
-              </p>
-              <p>
-                <strong>Location:</strong> {event.eventLocation}
-              </p>
-            </div>
-          ))}
+          events.map((event) => {
+            const eventIdValue = event.eventId || event.id;
+            return (
+              <div
+                key={eventIdValue}
+                className="event-item clickable"
+                onClick={() => navigate(`/event/${eventIdValue}`)}
+              >
+                <h3>{event.eventName}</h3>
+                <p>
+                  <strong>Date:</strong> {event.eventDate}
+                </p>
+                <p>
+                  <strong>Location:</strong> {event.eventLocation}
+                </p>
+              </div>
+            );
+          })}
 
         <button
           className="btn1"
