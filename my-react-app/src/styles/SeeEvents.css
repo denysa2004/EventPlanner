@@ -33,3 +33,56 @@
 .event-item p {
   margin: 3px 0;
 }
+.two-columns {
+  display: flex;
+  gap: 20px;
+}
+
+.column {
+  width: 48%;
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.invite-btn {
+  background: #ff70d0;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.invite-modal {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.3);
+  width: 400px;
+}
+
+.user-list {
+  max-height: 200px;
+  overflow-y: auto;
+  border: 1px solid #eee;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+.user-option {
+  display: block;
+  margin-bottom: 8px;
+}
+
+.cancel-btn {
+  background: #ccc;
+  padding: 8px 14px;
+  border-radius: 8px;
+  margin-left: 10px;
+}
