@@ -6,6 +6,7 @@ import Home from "./pages/Home";
 import CreateEvent from "./pages/CreateEvent";
 import SeeEvents from "./pages/SeeEvents";
 import EventDetail from "./pages/EventDetail";
+import EditEvent from "./pages/EditEvent";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
@@ -43,6 +44,14 @@ function App() {
           element={
             <ProtectedRoute>
               <EventDetail />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/event/:eventId/edit"
+          element={
+            <ProtectedRoute>
+              <EditEvent />
             </ProtectedRoute>
           }
         />
