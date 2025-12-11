@@ -34,7 +34,7 @@ function SeeEvents() {
 
  
     const respCreated = await fetch(
-      `http://localhost:8080/events/user/${user.userId}`
+      `http://localhost:8080/events/created/user/${user.userId}`
     );
     const created = await respCreated.json();
     setCreatedEvents(created);
@@ -118,12 +118,11 @@ function SeeEvents() {
     const user = JSON.parse(userString);
 
     const resp = await fetch(
-      `http://localhost:8080/events/${eventId}/respond?status=${status}`,
+      `http://localhost:8080/events/${eventId}/respond?status=${status}&userId=${user.userId}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
-          email: user.email, 
+          "Content-Type": "application/json"
         },
       }
     );
