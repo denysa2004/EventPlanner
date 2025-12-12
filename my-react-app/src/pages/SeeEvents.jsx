@@ -66,10 +66,14 @@ function SeeEvents() {
     const respUsers = await fetch("http://localhost:8080/auth/users");
     const userList = await respUsers.json();
 
-    const filtered = userList.filter(
-  (u) =>
-    !event.organizers.some((org) => org.userId === u.userId) &&
-    isValidEmail(u.email) 
+//     const filtered = userList.filter(
+//   (u) =>
+//     !event.organizers.some((org) => org.userId === u.userId) &&
+//     isValidEmail(u.email) 
+// );
+const filtered = userList.filter((u) =>
+  !(event.organizers ?? []).some((org) => org.userId === u.userId) &&
+  isValidEmail(u.email)
 );
 
 
