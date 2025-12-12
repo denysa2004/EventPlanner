@@ -160,3 +160,9 @@ font-size: 600;
     width: 100%;
   }
 }
+button.decline-btn{
+  color: red;
+}
+button.accept-btn{
+  color:green;
+}
