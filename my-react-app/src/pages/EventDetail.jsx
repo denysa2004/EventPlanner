@@ -118,6 +118,20 @@ function EventDetail() {
                     </div>
                 </div>
 
+                {event.description && (
+                    <div className="detail-section">
+                        <h3 className="section-title">Description</h3>
+                        <p className="event-description">{event.description}</p>
+                    </div>
+                )}
+
+                {event.schedule && (
+                    <div className="detail-section">
+                        <h3 className="section-title">Schedule / Agenda</h3>
+                        <pre className="event-schedule">{event.schedule}</pre>
+                    </div>
+                )}
+
                 <div className="detail-section">
                     <h3 className="section-title">Organizers</h3>
                     {event.organizers?.length > 0 ? (
