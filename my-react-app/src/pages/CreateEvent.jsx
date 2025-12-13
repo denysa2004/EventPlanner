@@ -2,12 +2,15 @@ import { useNavigate } from "react-router-dom";
 import "../styles/Register.css";
 import { useEffect, useState } from "react";
 import "../styles/CreateEvent.css";
+import ScheduleBuilder from "../components/ScheduleBuilder";
 
 function CreateEvent() {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [schedule, setSchedule] = useState("");
   const [organizers, setOrganizers] = useState([]);
   const [selectedOrganizers, setSelectedOrganizers] = useState([]);
   const [error, setError] = useState("");
@@ -86,6 +89,8 @@ function CreateEvent() {
           eventName,
           eventDate: date,
           eventLocation: location,
+          description: description,
+          schedule: schedule,
           organizersId: finalOrganizers,
         }),
       });
@@ -100,6 +105,8 @@ function CreateEvent() {
         setEventName("");
         setDate("");
         setLocation("");
+        setDescription("");
+        setSchedule("");
         setSelectedOrganizers([]);
 
         setTimeout(() => {
@@ -157,6 +164,21 @@ function CreateEvent() {
           onChange={(e) => setLocation(e.target.value)}
           disabled={loading}
           required
+        />
+
+        <textarea
+          placeholder="Event Description (optional)"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          disabled={loading}
+          rows="4"
+          className="event-textarea"
+        />
+
+        <ScheduleBuilder
+          initialSchedule={schedule}
+          onChange={setSchedule}
+          disabled={loading}
         />
 
         <label className="organizers-label">

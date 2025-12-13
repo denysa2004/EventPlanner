@@ -78,3 +78,28 @@
   height: 16px;
   accent-color: #b44cff;
 }
+
+.event-textarea {
+  width: 90%;
+  padding: 12px 15px;
+  margin: 10px 0;
+  border: 2px solid #e0c3fc;
+  border-radius: 10px;
+  outline: none;
+  font-size: 0.95rem;
+  background: white;
+  color: #333;
+  font-family: inherit;
+  resize: vertical;
+  min-height: 100px;
+  transition: 0.25s ease;
+}
+
+.event-textarea:focus {
+  border-color: #b44cff;
+  box-shadow: 0 0 8px rgba(180, 76, 255, 0.3);
+}
+
+.event-textarea::placeholder {
+  color: #999;
+}
