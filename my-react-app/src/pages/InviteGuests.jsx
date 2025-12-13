@@ -10,6 +10,8 @@ function InviteGuests() {
   const [eventName, setEventName] = useState("");
   const [users, setUsers] = useState([]);
   const [selectedEmails, setSelectedEmails] = useState([]);
+  const [customEmail, setCustomEmail] = useState("");
+  const [customEmails, setCustomEmails] = useState([]);
 
   const [loading, setLoading] = useState(false);
   const [loadingUsers, setLoadingUsers] = useState(true);
@@ -70,6 +72,34 @@ function InviteGuests() {
     );
   };
 
+  const addCustomEmail = () => {
+    const email = customEmail.trim();
+    if (!email) {
+      setError("Please enter an email");
+      return;
+    }
+
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address");
+      return;
+    }
+
+    if (customEmails.includes(email)) {
+      setError("This email is already added");
+      return;
+    }
+
+    setCustomEmails([...customEmails, email]);
+    setCustomEmail("");
+    setError("");
+  };
+
+  const removeCustomEmail = (email) => {
+    setCustomEmails(customEmails.filter((e) => e !== email));
+  };
+
   const handleInvite = async (e) => {
     e.preventDefault();
     setError("");
@@ -79,8 +109,11 @@ function InviteGuests() {
       setError("Event name missing");
       return;
     }
-    if (selectedEmails.length === 0) {
-      setError("Select at least one guest");
+
+    const allEmails = [...selectedEmails, ...customEmails];
+
+    if (allEmails.length === 0) {
+      setError("Select at least one guest or add an email");
       return;
     }
 
@@ -90,7 +123,7 @@ function InviteGuests() {
     setLoading(true);
     try {
       // Add guests to event using new endpoint
-      for (const email of selectedEmails) {
+      for (const email of allEmails) {
         const addRes = await fetch(
           `http://localhost:8080/events/${eventId}/guests?email=${encodeURIComponent(
             email
@@ -108,7 +141,7 @@ function InviteGuests() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          recipients: selectedEmails,
+          recipients: allEmails,
           name: me?.name || "Organizer",
           eventName: eventName,
         }),
@@ -141,15 +174,136 @@ function InviteGuests() {
           Event: <b>{eventName || "-"}</b>
         </p>
 
+        {/* Custom Email Input Section */}
+        <div style={{ marginBottom: "20px", marginTop: "20px" }}>
+          <label className="organizers-label">Invite by Email:</label>
+          <div
+            style={{ display: "flex", gap: "10px", alignItems: "flex-start" }}
+          >
+            <input
+              type="email"
+              placeholder="Enter email address..."
+              value={customEmail}
+              onChange={(e) => setCustomEmail(e.target.value)}
+              onKeyPress={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  addCustomEmail();
+                }
+              }}
+              disabled={loading}
+              style={{
+                flex: 1,
+                padding: "10px",
+                border: "2px solid #e0c3fc",
+                borderRadius: "8px",
+                fontSize: "14px",
+              }}
+            />
+            <button
+              type="button"
+              onClick={addCustomEmail}
+              disabled={loading}
+              style={{
+                padding: "10px 20px",
+                background: "#b44cff",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                cursor: "pointer",
+                fontSize: "14px",
+                fontWeight: "600",
+              }}
+            >
+              Add
+            </button>
+          </div>
+
+          {customEmails.length > 0 && (
+            <div style={{ marginTop: "15px" }}>
+              <div
+                style={{
+                  fontSize: "0.9rem",
+                  color: "#666",
+                  marginBottom: "8px",
+                }}
+              >
+                Added emails ({customEmails.length}):
+              </div>
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
+                {customEmails.map((email, idx) => (
+                  <div
+                    key={idx}
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "6px 12px",
+                      background: "#f0e6ff",
+                      border: "1px solid #b44cff",
+                      borderRadius: "20px",
+                      fontSize: "0.9rem",
+                    }}
+                  >
+                    <span>{email}</span>
+                    <button
+                      type="button"
+                      onClick={() => removeCustomEmail(email)}
+                      disabled={loading}
+                      style={{
+                        background: "none",
+                        border: "none",
+                        color: "#b44cff",
+                        cursor: "pointer",
+                        fontSize: "16px",
+                        fontWeight: "bold",
+                        padding: "0",
+                        lineHeight: "1",
+                      }}
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Divider */}
+        <div
+          style={{
+            height: "1px",
+            background: "#e0c3fc",
+            margin: "25px 0",
+            position: "relative",
+          }}
+        >
+          <span
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              background: "white",
+              padding: "0 10px",
+              color: "#999",
+              fontSize: "0.85rem",
+            }}
+          >
+            OR
+          </span>
+        </div>
+
         {loadingUsers ? (
           <p style={{ textAlign: "center", color: "#666" }}>Loading users...</p>
         ) : users.length === 0 ? (
           <p style={{ textAlign: "center", color: "#666" }}>
-            No users available
+            No registered users available
           </p>
         ) : (
           <>
-            <label className="organizers-label">Select guests:</label>
+            <label className="organizers-label">Select registered users:</label>
             <div className="organizers-list">
               {users.map((u) => (
                 <label key={u.userId} className="organizer-option">
