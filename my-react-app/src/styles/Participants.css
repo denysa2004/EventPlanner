@@ -1,56 +1,180 @@
 .participants-form {
-    width: 650px;
-    max-width: 92%;
+  width: 750px;
+  max-width: 95%;
+}
+
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, #f0e6ff, #faf7fc);
+  border: 2px solid #e0c3fc;
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #b44cff;
+  margin-bottom: 5px;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #666;
+  font-weight: 500;
 }
 
 .participants-actions {
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    flex-wrap: wrap;
-    margin-bottom: 18px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 25px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: #666;
 }
 
 .participants-list {
-    width: 100%;
-    display: grid;
-    gap: 12px;
-    margin-top: 10px;
+  width: 100%;
+  display: grid;
+  gap: 15px;
+  margin-top: 10px;
 }
 
 .participant-card {
-    padding: 14px;
-    border: 2px solid #e0c3fc;
-    border-radius: 14px;
-    background: #fff;
+  padding: 20px;
+  border: 2px solid #e0c3fc;
+  border-radius: 12px;
+  background: #fff;
+  transition: 0.2s ease;
 }
 
-.participant-main {
-    text-align: left;
+.participant-card:hover {
+  border-color: #b44cff;
+  box-shadow: 0 2px 8px rgba(180, 76, 255, 0.15);
+}
+
+.participant-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.participant-info {
+  flex: 1;
 }
 
 .participant-name {
-    font-weight: 700;
-    color: #333;
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 5px;
 }
 
 .participant-email {
-    font-size: 0.92rem;
-    color: #666;
-    margin-top: 2px;
+  font-size: 0.9rem;
+  color: #666;
 }
 
-.participant-status {
-    font-size: 0.9rem;
-    margin-top: 8px;
-    color: #b44cff;
-    font-weight: 600;
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  white-space: nowrap;
 }
 
-.participant-actions-row {
-    margin-top: 12px;
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    align-items: center;
+.status-accepted {
+  background: #d4edda;
+  color: #155724;
+  border: 1px solid #c3e6cb;
+}
+
+.status-pending {
+  background: #fff3cd;
+  color: #856404;
+  border: 1px solid #ffeaa7;
+}
+
+.status-declined {
+  background: #f8d7da;
+  color: #721c24;
+  border: 1px solid #f5c6cb;
+}
+
+.participant-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: 2px solid;
+  background: white;
+  transition: 0.2s ease;
+}
+
+.action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.action-btn.accept {
+  border-color: #28a745;
+  color: #28a745;
+}
+
+.action-btn.accept:hover:not(:disabled) {
+  background: #28a745;
+  color: white;
+}
+
+.action-btn.pending {
+  border-color: #ffc107;
+  color: #856404;
+}
+
+.action-btn.pending:hover:not(:disabled) {
+  background: #ffc107;
+  color: white;
+}
+
+.action-btn.decline {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.action-btn.decline:hover:not(:disabled) {
+  background: #dc3545;
+  color: white;
+}
+
+.action-btn.remove {
+  border-color: #6c757d;
+  color: #6c757d;
+  margin-left: auto;
+}
+
+.action-btn.remove:hover:not(:disabled) {
+  background: #6c757d;
+  color: white;
 }
