@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import "../styles/Register.css";
 import "../styles/CreateEvent.css";
+import ScheduleBuilder from "../components/ScheduleBuilder";
 
 function EditEvent() {
   const navigate = useNavigate();
@@ -9,6 +10,8 @@ function EditEvent() {
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
   const [location, setLocation] = useState("");
+  const [description, setDescription] = useState("");
+  const [schedule, setSchedule] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [loadingEvent, setLoadingEvent] = useState(true);
@@ -54,6 +57,8 @@ function EditEvent() {
       setEventName(data.eventName || "");
       setDate(data.eventDate || "");
       setLocation(data.eventLocation || "");
+      setDescription(data.description || "");
+      setSchedule(data.schedule || "");
       setLoadingEvent(false);
     } catch (err) {
       console.error("Error fetching event details:", err);
@@ -82,6 +87,8 @@ function EditEvent() {
           eventName,
           eventDate: date,
           eventLocation: location,
+          description: description,
+          schedule: schedule,
         }),
       });
 
@@ -162,6 +169,21 @@ function EditEvent() {
           onChange={(e) => setLocation(e.target.value)}
           disabled={loading}
           required
+        />
+
+        <textarea
+          placeholder="Event Description (optional)"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          disabled={loading}
+          rows="4"
+          className="event-textarea"
+        />
+
+        <ScheduleBuilder
+          initialSchedule={schedule}
+          onChange={setSchedule}
+          disabled={loading}
         />
 
         {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}

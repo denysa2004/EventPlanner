@@ -4,207 +4,259 @@ import "../styles/Register.css";
 import "../styles/Participants.css";
 
 function ParticipantsList() {
-    const navigate = useNavigate();
-    const { eventId } = useParams();
+  const navigate = useNavigate();
+  const { eventId } = useParams();
 
-    const [event, setEvent] = useState(null);
-    const [isOrganizer, setIsOrganizer] = useState(false);
+  const [event, setEvent] = useState(null);
+  const [isOrganizer, setIsOrganizer] = useState(false);
 
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
 
-    const fetchEvent = async () => {
-        try {
-            setLoading(true);
-            setError("");
+  const fetchEvent = async () => {
+    try {
+      setLoading(true);
+      setError("");
 
-            const userString = localStorage.getItem("user");
-            const user = userString ? JSON.parse(userString) : null;
+      const userString = localStorage.getItem("user");
+      const user = userString ? JSON.parse(userString) : null;
 
-            if (!user?.userId) {
-                setError("User not logged in");
-                navigate("/");
-                return;
-            }
+      if (!user?.userId) {
+        setError("User not logged in");
+        navigate("/");
+        return;
+      }
 
-            const res = await fetch(`http://localhost:8080/events/${eventId}`);
-            if (!res.ok) {
-                const txt = await res.text();
-                throw new Error(txt || "Failed to fetch event");
-            }
+      const res = await fetch(`http://localhost:8080/events/${eventId}`);
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt || "Failed to fetch event");
+      }
 
-            const data = await res.json();
-            setEvent(data);
+      const data = await res.json();
 
-            const organizer = data.organizers?.some((o) => o.userId === user.userId);
-            setIsOrganizer(!!organizer);
+      const organizer = data.organizers?.some((o) => o.userId === user.userId);
+      setIsOrganizer(!!organizer);
 
-            if (!organizer) {
-                setError("Only organizers can view/manage participants.");
-            }
-        } catch (e) {
-            setError(e.message || "Something went wrong");
-        } finally {
-            setLoading(false);
-        }
-    };
+      if (!organizer) {
+        setError("Only organizers can view/manage participants.");
+        setLoading(false);
+        return;
+      }
 
-    useEffect(() => {
-        fetchEvent();
-    }, [eventId]);
+      // Fetch guests using new endpoint
+      const guestsRes = await fetch(
+        `http://localhost:8080/events/${eventId}/guests`
+      );
+      if (!guestsRes.ok) {
+        throw new Error("Failed to fetch guests");
+      }
 
-    const setStatus = async (userId, status) => {
-        try {
-            const res = await fetch(
-                `http://localhost:8080/events/${eventId}/respond?status=${status}&userId=${userId}`,
-                { method: "POST" }
-            );
-
-            if (!res.ok) {
-                const txt = await res.text();
-                throw new Error(txt || "Failed to update status");
-            }
-
-            setEvent((prev) => {
-                if (!prev) return prev;
-                const updated = (prev.eventGuests || []).map((g) => {
-                    if (g.user?.userId === userId) return { ...g, status };
-                    return g;
-                });
-                return { ...prev, eventGuests: updated };
-            });
-        } catch (e) {
-            alert(e.message || "Error updating status");
-        }
-    };
-
-    const removeGuest = async (userId) => {
-        if (!window.confirm("Remove this participant?")) return;
-
-        // 1) încercăm DELETE (dacă există la voi)
-        try {
-            const del = await fetch(
-                `http://localhost:8080/events/${eventId}/guests?userId=${userId}`,
-                { method: "DELETE" }
-            );
-
-            if (del.ok) {
-                setEvent((prev) => {
-                    if (!prev) return prev;
-                    return {
-                        ...prev,
-                        eventGuests: (prev.eventGuests || []).filter(
-                            (g) => g.user?.userId !== userId
-                        ),
-                    };
-                });
-                return;
-            }
-        } catch (_) {
-        }
-
-        await setStatus(userId, "DECLINED");
-    };
-
-    if (loading) {
-        return (
-            <div className="register-page">
-                <div className="register-form participants-form">
-                    <p style={{ textAlign: "center", color: "#666" }}>Loading...</p>
-                </div>
-            </div>
-        );
+      const guests = await guestsRes.json();
+      setEvent({ ...data, eventGuests: guests });
+    } catch (e) {
+      setError(e.message || "Something went wrong");
+    } finally {
+      setLoading(false);
     }
+  };
 
-    if (error) {
-        return (
-            <div className="register-page">
-                <div className="register-form participants-form">
-                    <h1 className="register-title">Participants</h1>
-                    <p style={{ color: "red", textAlign: "center" }}>{error}</p>
-                    <button className="btn1" onClick={() => navigate(`/event/${eventId}`)}>
-                        Back to Event
-                    </button>
-                </div>
-            </div>
-        );
+  useEffect(() => {
+    fetchEvent();
+  }, [eventId]);
+
+  const setStatus = async (userId, status) => {
+    try {
+      const res = await fetch(
+        `http://localhost:8080/events/${eventId}/guests/${userId}?status=${status}`,
+        { method: "PUT" }
+      );
+
+      if (!res.ok) {
+        const txt = await res.text();
+        throw new Error(txt || "Failed to update status");
+      }
+
+      setEvent((prev) => {
+        if (!prev) return prev;
+        const updated = (prev.eventGuests || []).map((g) => {
+          if (g.user?.userId === userId) return { ...g, status };
+          return g;
+        });
+        return { ...prev, eventGuests: updated };
+      });
+    } catch (e) {
+      alert(e.message || "Error updating status");
     }
+  };
 
-    const guests = event?.eventGuests || [];
+  const removeGuest = async (userId) => {
+    if (!window.confirm("Remove this participant?")) return;
 
+    try {
+      const del = await fetch(
+        `http://localhost:8080/events/${eventId}/guests/${userId}`,
+        { method: "DELETE" }
+      );
+
+      if (!del.ok) {
+        const txt = await del.text();
+        throw new Error(txt || "Failed to remove guest");
+      }
+
+      setEvent((prev) => {
+        if (!prev) return prev;
+        return {
+          ...prev,
+          eventGuests: (prev.eventGuests || []).filter(
+            (g) => g.user?.userId !== userId
+          ),
+        };
+      });
+    } catch (e) {
+      alert(e.message || "Error removing guest");
+    }
+  };
+
+  if (loading) {
     return (
-        <div className="register-page">
-            <div className="register-form participants-form">
-                <h1 className="register-title">Participants</h1>
+      <div className="register-page">
+        <div className="register-form participants-form">
+          <p style={{ textAlign: "center", color: "#666" }}>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
-                <div className="participants-actions">
-                    {isOrganizer && (
-                        <button
-                            className="btn"
-                            type="button"
-                            onClick={() => navigate(`/event/${eventId}/participants/invite`)}
-                        >
-                            Invite Guests
-                        </button>
-                    )}
+  if (error) {
+    return (
+      <div className="register-page">
+        <div className="register-form participants-form">
+          <h1 className="register-title">Participants</h1>
+          <p style={{ color: "red", textAlign: "center" }}>{error}</p>
+          <button
+            className="btn1"
+            onClick={() => navigate(`/event/${eventId}`)}
+          >
+            Back to Event
+          </button>
+        </div>
+      </div>
+    );
+  }
 
-                    <button className="btn1" type="button" onClick={() => navigate(`/event/${eventId}`)}>
-                        Back to Event
-                    </button>
+  const guests = event?.eventGuests || [];
+  const acceptedCount = guests.filter((g) => g.status === "ACCEPTED").length;
+  const pendingCount = guests.filter((g) => g.status === "PENDING").length;
+  const declinedCount = guests.filter((g) => g.status === "DECLINED").length;
+
+  return (
+    <div className="register-page">
+      <div className="register-form participants-form">
+        <h1 className="register-title">
+          {event?.eventName || "Event"} - Participants
+        </h1>
+
+        <div className="stats-container">
+          <div className="stat-box">
+            <div className="stat-number">{acceptedCount}</div>
+            <div className="stat-label">Accepted</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-number">{pendingCount}</div>
+            <div className="stat-label">Pending</div>
+          </div>
+          <div className="stat-box">
+            <div className="stat-number">{declinedCount}</div>
+            <div className="stat-label">Declined</div>
+          </div>
+        </div>
+
+        <div className="participants-actions">
+          {isOrganizer && (
+            <button
+              className="btn"
+              type="button"
+              onClick={() => navigate(`/event/${eventId}/participants/invite`)}
+            >
+              + Invite Guests
+            </button>
+          )}
+
+          <button
+            className="btn1"
+            type="button"
+            onClick={() => navigate(`/event/${eventId}`)}
+          >
+            Back to Event
+          </button>
+        </div>
+
+        {guests.length === 0 ? (
+          <div className="empty-state">
+            <p>No participants yet.</p>
+            <p style={{ fontSize: "0.9rem", color: "#999", marginTop: "8px" }}>
+              Click "Invite Guests" to start inviting people to your event.
+            </p>
+          </div>
+        ) : (
+          <div className="participants-list">
+            {guests.map((g) => (
+              <div key={g.user?.userId} className="participant-card">
+                <div className="participant-header">
+                  <div className="participant-info">
+                    <div className="participant-name">{g.user?.name}</div>
+                    <div className="participant-email">{g.user?.email}</div>
+                  </div>
+                  <span
+                    className={`status-badge status-${g.status?.toLowerCase()}`}
+                  >
+                    {g.status}
+                  </span>
                 </div>
 
-                {guests.length === 0 ? (
-                    <p style={{ textAlign: "center", color: "#666" }}>No participants yet.</p>
-                ) : (
-                    <div className="participants-list">
-                        {guests.map((g) => (
-                            <div key={g.user?.userId} className="participant-card">
-                                <div className="participant-main">
-                                    <div className="participant-name">{g.user?.name}</div>
-                                    <div className="participant-email">{g.user?.email}</div>
-                                    <div className="participant-status">Status: {g.status}</div>
-
-                                    {/* organizer-only actions */}
-                                    <div className="participant-actions-row">
-                                        <button
-                                            type="button"
-                                            className="accept-btn"
-                                            onClick={() => setStatus(g.user.userId, "ACCEPTED")}
-                                        >
-                                            ACCEPTED
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="decline-btn"
-                                            onClick={() => setStatus(g.user.userId, "DECLINED")}
-                                        >
-                                            DECLINED
-                                        </button>
-                                        <button
-                                            type="button"
-                                            className="btn"
-                                            onClick={() => setStatus(g.user.userId, "PENDING")}
-                                        >
-                                            PENDING
-                                        </button>
-
-                                        <button
-                                            type="button"
-                                            className="decline-btn"
-                                            onClick={() => removeGuest(g.user.userId)}
-                                            style={{ marginLeft: "auto" }}
-                                        >
-                                            Remove
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                {isOrganizer && (
+                  <div className="participant-actions">
+                    <button
+                      type="button"
+                      className="action-btn accept"
+                      onClick={() => setStatus(g.user.userId, "ACCEPTED")}
+                      disabled={g.status === "ACCEPTED"}
+                    >
+                      Accept
+                    </button>
+                    <button
+                      type="button"
+                      className="action-btn pending"
+                      onClick={() => setStatus(g.user.userId, "PENDING")}
+                      disabled={g.status === "PENDING"}
+                    >
+                      Pending
+                    </button>
+                    <button
+                      type="button"
+                      className="action-btn decline"
+                      onClick={() => setStatus(g.user.userId, "DECLINED")}
+                      disabled={g.status === "DECLINED"}
+                    >
+                      Decline
+                    </button>
+                    <button
+                      type="button"
+                      className="action-btn remove"
+                      onClick={() => removeGuest(g.user.userId)}
+                    >
+                      Remove
+                    </button>
+                  </div>
                 )}
-            </div>
-        </div>
-    );
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
 }
 
 export default ParticipantsList;
