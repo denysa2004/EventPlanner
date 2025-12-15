@@ -3,13 +3,14 @@ import { useState, useEffect } from "react";
 import "../styles/Register.css";
 import "../styles/CreateEvent.css";
 import ScheduleBuilder from "../components/ScheduleBuilder";
+import MapPicker from "../components/MapPicker";
 
 function EditEvent() {
   const navigate = useNavigate();
   const { eventId } = useParams();
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({ latitude: null, longitude: null, address: "" });
   const [description, setDescription] = useState("");
   const [schedule, setSchedule] = useState("");
   const [error, setError] = useState("");
@@ -56,7 +57,20 @@ function EditEvent() {
       // Populate form with existing data
       setEventName(data.eventName || "");
       setDate(data.eventDate || "");
-      setLocation(data.eventLocation || "");
+      if (data.eventLocation) {
+          try {
+              const parsedLocation = typeof data.eventLocation === 'string'
+                  ? JSON.parse(data.eventLocation)
+                  : data.eventLocation;
+              setLocation({
+                  latitude: parsedLocation.latitude || null,
+                  longitude: parsedLocation.longitude || null,
+                  address: parsedLocation.address || ""
+              });
+          } catch {
+              setLocation({ latitude: null, longitude: null, address: data.eventLocation });
+          }
+      }
       setDescription(data.description || "");
       setSchedule(data.schedule || "");
       setLoadingEvent(false);
@@ -70,7 +84,7 @@ function EditEvent() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!eventName || !date || !location) {
+    if (!eventName || !date || (!location.latitude && !location.address)) {
       setError("Please fill in all required fields");
       return;
     }
@@ -86,7 +100,7 @@ function EditEvent() {
         body: JSON.stringify({
           eventName,
           eventDate: date,
-          eventLocation: location,
+          eventLocation: JSON.stringify(location),
           description: description,
           schedule: schedule,
         }),
@@ -161,16 +175,11 @@ function EditEvent() {
           min={new Date().toISOString().split("T")[0]}
           required
         />
-
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          disabled={loading}
-          required
+        <MapPicker
+            initialLocation={location}
+            onChange={setLocation}
+            disabled={loading}
         />
-
         <textarea
           placeholder="Event Description (optional)"
           value={description}
