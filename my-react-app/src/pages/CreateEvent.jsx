@@ -3,12 +3,17 @@ import "../styles/Register.css";
 import { useEffect, useState } from "react";
 import "../styles/CreateEvent.css";
 import ScheduleBuilder from "../components/ScheduleBuilder";
+import MapPicker from "../components/MapPicker";
 
 function CreateEvent() {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState("");
   const [date, setDate] = useState("");
-  const [location, setLocation] = useState("");
+  const [location, setLocation] = useState({
+      latitude: null,
+      longitude: null,
+      address: ""
+  });
   const [description, setDescription] = useState("");
   const [schedule, setSchedule] = useState("");
   const [organizers, setOrganizers] = useState([]);
@@ -55,14 +60,18 @@ function CreateEvent() {
 
   useEffect(() => {
     fetchOrganizers();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+
   }, []);
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!eventName || !date || !location) {
-      setError("Please fill in all fields");
-      return;
+    if (!eventName || !date || !location.address) {
+        setError("Please fill in all required fields including location");
+        return;
+    }
+    if (!location.latitude || !location.longitude) {
+        setError("Please select a valid location from the map");
+        return;
     }
 
     setLoading(true);
@@ -79,7 +88,6 @@ function CreateEvent() {
         return;
       }
 
-      // Include logged-in user as organizer along with selected ones
       const finalOrganizers = [...selectedOrganizers, loggedInUser.userId];
 
       const response = await fetch("http://localhost:8080/events/createEvent", {
@@ -88,7 +96,11 @@ function CreateEvent() {
         body: JSON.stringify({
           eventName,
           eventDate: date,
-          eventLocation: location,
+          location: {
+              latitude: location.latitude,
+              longitude: location.longitude,
+              address: location.address
+          },
           description: description,
           schedule: schedule,
           organizersId: finalOrganizers,
@@ -104,7 +116,7 @@ function CreateEvent() {
         // Clear form
         setEventName("");
         setDate("");
-        setLocation("");
+        setLocation({ latitude: null, longitude: null, address: "" });
         setDescription("");
         setSchedule("");
         setSelectedOrganizers([]);
@@ -134,6 +146,10 @@ function CreateEvent() {
     }
   };
 
+  const handleLocationChange = (newLocation) => {
+      setLocation(newLocation);
+  };
+
   return (
     <div className="register-page">
       <form className="register-form" onSubmit={handleSubmit}>
@@ -157,13 +173,11 @@ function CreateEvent() {
           required
         />
 
-        <input
-          type="text"
-          placeholder="Location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
-          disabled={loading}
-          required
+        <label className="form-label">Event Location *</label>
+        <MapPicker
+            value={location}
+            onChange={handleLocationChange}
+            disabled={loading}
         />
 
         <textarea

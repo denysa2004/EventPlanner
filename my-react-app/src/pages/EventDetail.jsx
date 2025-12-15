@@ -2,6 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import "../styles/Register.css";
 import "../styles/EventDetail.css";
+import MapDisplay from "../components/MapDisplay";
 
 function EventDetail() {
   const navigate = useNavigate();
@@ -117,12 +118,15 @@ function EventDetail() {
             <span className="detail-label">📅 Date:</span>
             <span className="detail-value">{event.eventDate}</span>
           </div>
-
-          <div className="detail-item">
-            <span className="detail-label">📍 Location:</span>
-            <span className="detail-value">{event.eventLocation}</span>
-          </div>
         </div>
+
+        {event.location?.latitude && event.location?.longitude && (
+            <div className="detail-section">
+                <h3 className="section-title">Event Location Map</h3>
+                <MapDisplay location={event.location} isEditable={false} />
+            </div>
+        )}
+
 
         {event.description && (
           <div className="detail-section">

@@ -135,7 +135,7 @@ function SeeEvents() {
                   <strong>Date:</strong> {event.eventDate}
                 </p>
                 <p>
-                  <strong>Location:</strong> {event.eventLocation}
+                  <strong>Location:</strong> {event.location?.address || event.eventLocation}
                 </p>
               </div>
             ))}
@@ -154,7 +154,7 @@ function SeeEvents() {
                   <strong>Date:</strong> {event.eventDate}
                 </p>
                 <p>
-                  <strong>Location:</strong> {event.eventLocation}
+                  <strong>Location:</strong> {event.location?.address || event.eventLocation}
                 </p>
 
                 <p>
