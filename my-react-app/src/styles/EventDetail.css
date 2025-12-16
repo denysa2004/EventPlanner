@@ -86,9 +86,8 @@
   flex-wrap: wrap;
   justify-content: center;
 }
-
-.btn-edit {
-  background: linear-gradient(90deg, #4b7bec, #3867d6);
+button.btn{
+    background:rgb(251, 149, 246);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -99,14 +98,33 @@
   transition: 0.25s ease;
 }
 
-.btn-edit:hover {
-  background: linear-gradient(90deg, #3867d6, #4b7bec);
-  box-shadow: 0 4px 15px rgba(75, 123, 236, 0.4);
-  transform: translateY(-2px);
+button.btn-edit {
+  background:rgb(251, 149, 246);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
 }
+
+
 
 .btn-delete {
-  background: linear-gradient(90deg, #ff6b6b, #ee5a52);
+  background:rgb(251, 149, 246);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+.bttn{
+    background: rgb(247, 4, 235);
   color: white;
   border: none;
   padding: 12px 25px;
@@ -117,11 +135,7 @@
   transition: 0.25s ease;
 }
 
-.btn-delete:hover {
-  background: linear-gradient(90deg, #ee5a52, #ff6b6b);
-  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
-  transform: translateY(-2px);
-}
+
 
 .event-detail-container .btn1 {
   background: rgb(244, 162, 211);

@@ -123,14 +123,15 @@
 }
 
 .action-btn {
-  padding: 8px 16px;
-  border-radius: 6px;
-  font-size: 0.9rem;
-  font-weight: 500;
+    color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
   cursor: pointer;
-  border: 2px solid;
-  background: white;
-  transition: 0.2s ease;
+  transition: 0.25s ease;
+  width: 20px;
 }
 
 .action-btn:disabled {
@@ -168,13 +169,22 @@
   color: white;
 }
 
-.action-btn.remove {
-  border-color: #6c757d;
-  color: #6c757d;
-  margin-left: auto;
+ .action-btn.remove {
+  background: pink;
+  color: rgb(188, 6, 88);
+  border: none;
+  padding: 12px 0;
+  border-radius: 25px;
+  width: 20%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 15px;
+  margin-left: 230px;
+  
 }
 
 .action-btn.remove:hover:not(:disabled) {
-  background: #6c757d;
+  background: #c52788;
   color: white;
-}
+} 

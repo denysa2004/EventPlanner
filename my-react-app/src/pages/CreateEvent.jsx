@@ -5,6 +5,8 @@ import "../styles/CreateEvent.css";
 import ScheduleBuilder from "../components/ScheduleBuilder";
 import MapPicker from "../components/MapPicker";
 
+
+
 function CreateEvent() {
   const navigate = useNavigate();
   const [eventName, setEventName] = useState("");

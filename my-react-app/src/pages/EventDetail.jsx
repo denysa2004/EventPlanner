@@ -181,7 +181,7 @@ function EventDetail() {
             </>
           )}
 
-          <button className="btn1" onClick={() => navigate("/see-events")}>
+          <button className="bttn" onClick={() => navigate("/see-events")}>
             Back to Events
           </button>
         </div>

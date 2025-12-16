@@ -175,6 +175,7 @@ function SeeEvents() {
                       onClick={() =>
                         respondToInvitation(event.eventId, "ACCEPTED")
                       }
+                      style={{width:100}}
                     >
                       Accept
                     </button>
@@ -183,6 +184,7 @@ function SeeEvents() {
                       onClick={() =>
                         respondToInvitation(event.eventId, "DECLINED")
                       }
+                      style={{width:100}}
                     >
                       Decline
                     </button>
@@ -194,7 +196,7 @@ function SeeEvents() {
         </div>
 
         <button
-          className="btn"
+          className="bttn"
           type="button"
           onClick={() => navigate("/home")}
           style={{ marginTop: 20 }}
