@@ -155,7 +155,7 @@ function InviteGuests() {
       setSuccess("Guests added and invitations sent! Redirecting...");
       setTimeout(() => navigate(`/event/${eventId}/participants`), 1200);
     } catch (e2) {
-      setError(e2.message || "Error");
+      //setError(e2.message || "Error");
     } finally {
       setLoading(false);
     }
@@ -205,14 +205,17 @@ function InviteGuests() {
               onClick={addCustomEmail}
               disabled={loading}
               style={{
-                padding: "10px 20px",
+               
                 background: "#b44cff",
                 color: "white",
                 border: "none",
-                borderRadius: "8px",
+                borderRadius: "20px",
                 cursor: "pointer",
                 fontSize: "14px",
-                fontWeight: "600",
+                fontWeight: "20",
+                width:100,
+                marginTop:10,
+                
               }}
             >
               Add
@@ -323,18 +326,18 @@ function InviteGuests() {
         {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
         {success && <p style={{ color: "green", marginTop: 10 }}>{success}</p>}
 
-        <button type="submit" disabled={loading || loadingUsers}>
+        <button type="submit" disabled={loading || loadingUsers} style={{width:300}}>
           {loading ? "Sending..." : "Send Invites"}
         </button>
 
-        <button
+        {/* <button
           type="button"
           className="btn1"
           onClick={() => navigate(`/event/${eventId}/participants`)}
           disabled={loading}
         >
           Cancel
-        </button>
+        </button> */}
       </form>
     </div>
   );

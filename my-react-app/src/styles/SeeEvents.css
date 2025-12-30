@@ -6,6 +6,17 @@ body {
   padding: 0;
   color: #333;
 }
+button.bttn{
+    background: rgb(247, 4, 235);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 25px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.25s ease;
+}
 
 h1 {
   text-align: center;

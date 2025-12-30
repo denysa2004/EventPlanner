@@ -54,18 +54,14 @@ body {
   border: none;
   padding: 12px 0;
   border-radius: 25px;
-  width: 80%;
+  width: 60%;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   margin-top: 15px;
 }
 
-.register-form button:hover {
-  background: linear-gradient(90deg, #ff69b4, #b44cff);
-  box-shadow: 0 4px 15px rgba(180, 76, 255, 0.4);
-  transform: translateY(-2px);
-}
+
 
 .register-form p {
   margin-top: 20px;

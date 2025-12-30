@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import "../styles/Register.css";
 import "../styles/Participants.css";
+import "../styles/EventDetail.css"
 
 function ParticipantsList() {
   const navigate = useNavigate();
@@ -135,7 +136,7 @@ function ParticipantsList() {
           <h1 className="register-title">Participants</h1>
           <p style={{ color: "red", textAlign: "center" }}>{error}</p>
           <button
-            className="btn1"
+            className="bttn"
             onClick={() => navigate(`/event/${eventId}`)}
           >
             Back to Event
@@ -178,15 +179,17 @@ function ParticipantsList() {
               className="btn"
               type="button"
               onClick={() => navigate(`/event/${eventId}/participants/invite`)}
+              style={{width:200}}
             >
               + Invite Guests
             </button>
           )}
 
           <button
-            className="btn1"
+            className="bttn"
             type="button"
             onClick={() => navigate(`/event/${eventId}`)}
+            style={{width:200}}
           >
             Back to Event
           </button>
@@ -217,7 +220,7 @@ function ParticipantsList() {
 
                 {isOrganizer && (
                   <div className="participant-actions">
-                    <button
+                    {/* <button
                       type="button"
                       className="action-btn accept"
                       onClick={() => setStatus(g.user.userId, "ACCEPTED")}
@@ -240,7 +243,7 @@ function ParticipantsList() {
                       disabled={g.status === "DECLINED"}
                     >
                       Decline
-                    </button>
+                    </button> */}
                     <button
                       type="button"
                       className="action-btn remove"
