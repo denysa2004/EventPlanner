@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import * as XLSX from 'xlsx';
 import "../styles/Register.css";
 import "../styles/CreateEvent.css";
 
@@ -17,6 +18,21 @@ function InviteGuests() {
   const [loadingUsers, setLoadingUsers] = useState(true);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
+    const [selectedFile, setSelectedFile] = useState(null);
+    const onFileChange = (event) => {
+        const file = event.target.files[0];
+        const allowedTypes = [
+            'application/vnd.ms-excel',
+            'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'text/csv'
+        ];
+        if (!allowedTypes.includes(file.type)) {
+            alert("Please select an image file");
+            return;
+        }
+        setSelectedFile(file);
+    };
 
   const load = async () => {
     try {
@@ -100,6 +116,63 @@ function InviteGuests() {
     setCustomEmails(customEmails.filter((e) => e !== email));
   };
 
+  const loadDataFromExcel = (file) => {
+      return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+
+          reader.onload = (event) => {
+              try {
+                  const data = new Uint8Array(event.target.result);
+                  const workbook = XLSX.read(data, { type: 'array' });
+
+                  const firstSheetName = workbook.SheetNames[0];
+                  const worksheet = workbook.Sheets[firstSheetName];
+                  const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+
+                  const emails = jsonData
+                      .map(row => row[0])
+                      .filter(email => email && typeof email === 'string')
+                      .map(email => email.trim())
+                      .filter(email => email.length > 0);
+
+                  console.log('Extracted emails:', emails);
+
+                  const validEmails = emails.filter(email => {
+                      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                      return emailRegex.test(email);
+                  });
+
+
+                  if (validEmails.length === 0) {
+                      alert('No valid emails found in the file');
+                      resolve([]);
+                      return;
+                  }
+
+                  setCustomEmails(prev => {
+                      const combined = [...prev, ...validEmails];
+                      return [...new Set(combined)];
+                  });
+
+                  setSuccess(`Successfully imported email(s) from file`);
+                  resolve(validEmails);  // Return the valid emails
+
+              } catch (error) {
+                  console.error('Error reading file:', error);
+                  alert('Error reading file. Please make sure it is a valid Excel file.');
+                  reject(error);
+              }
+          };
+
+          reader.onerror = () => {
+              alert('Error reading file');
+              reject(new Error('File reading error'));
+          };
+
+          reader.readAsArrayBuffer(file);
+      });
+  }
+
   const handleInvite = async (e) => {
     e.preventDefault();
     setError("");
@@ -109,10 +182,20 @@ function InviteGuests() {
       setError("Event name missing");
       return;
     }
+      let excelEmails = [];
 
-    const allEmails = [...selectedEmails, ...customEmails];
+      if (selectedFile) {
+          try {
+              excelEmails = await loadDataFromExcel(selectedFile);
+          } catch (err) {
+              setError("Failed to process Excel file");
+              return;
+          }
+      }
 
-    if (allEmails.length === 0) {
+      const allEmails = [...new Set([...selectedEmails, ...customEmails, ...excelEmails])];
+
+      if (allEmails.length === 0) {
       setError("Select at least one guest or add an email");
       return;
     }
@@ -155,7 +238,8 @@ function InviteGuests() {
       setSuccess("Guests added and invitations sent! Redirecting...");
       setTimeout(() => navigate(`/event/${eventId}/participants`), 1200);
     } catch (e2) {
-      //setError(e2.message || "Error");
+        setSuccess("");
+      setError(e2.message || "Error");
     } finally {
       setLoading(false);
     }
@@ -297,6 +381,38 @@ function InviteGuests() {
             OR
           </span>
         </div>
+
+          <div>
+              <h3>Upload Invite List From Excel</h3>
+              <div>
+                  <input type="file" onChange={onFileChange} accept=".xlsx, .xls, .csv"/>
+              </div>
+          </div>
+
+
+          <div
+              style={{
+                  height: "1px",
+                  background: "#e0c3fc",
+                  margin: "25px 0",
+                  position: "relative",
+              }}
+          >
+          <span
+              style={{
+                  position: "absolute",
+                  top: "50%",
+                  left: "50%",
+                  transform: "translate(-50%, -50%)",
+                  background: "white",
+                  padding: "0 10px",
+                  color: "#999",
+                  fontSize: "0.85rem",
+              }}
+          >
+            OR
+          </span>
+          </div>
 
         {loadingUsers ? (
           <p style={{ textAlign: "center", color: "#666" }}>Loading users...</p>
