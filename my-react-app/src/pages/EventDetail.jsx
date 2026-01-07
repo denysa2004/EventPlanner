@@ -121,12 +121,11 @@ function EventDetail() {
         </div>
 
         {event.location?.latitude && event.location?.longitude && (
-            <div className="detail-section">
-                <h3 className="section-title">Event Location Map</h3>
-                <MapDisplay location={event.location} isEditable={false} />
-            </div>
+          <div className="detail-section">
+            <h3 className="section-title">Event Location Map</h3>
+            <MapDisplay location={event.location} isEditable={false} />
+          </div>
         )}
-
 
         {event.description && (
           <div className="detail-section">
@@ -180,6 +179,13 @@ function EventDetail() {
               </button>
             </>
           )}
+          
+          <button
+            className="btn"
+            onClick={() => navigate(`/event/${eventId}/photos`)}
+          >
+            📷 Event Photos
+          </button>
 
           <button className="bttn" onClick={() => navigate("/see-events")}>
             Back to Events

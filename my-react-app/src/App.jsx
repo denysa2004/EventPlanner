@@ -10,80 +10,89 @@ import EditEvent from "./pages/EditEvent";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ParticipantsList from "./pages/ParticipantsList";
 import InviteGuests from "./pages/InviteGuests";
+import EventPhotos from "./pages/EventPhotos";
 
 function App() {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/register" element={<Register />} />
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
 
-                <Route
-                    path="/home"
-                    element={
-                        <ProtectedRoute>
-                            <Home />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/home"
+          element={
+            <ProtectedRoute>
+              <Home />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/create-event"
-                    element={
-                        <ProtectedRoute>
-                            <CreateEvent />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/create-event"
+          element={
+            <ProtectedRoute>
+              <CreateEvent />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/see-events"
-                    element={
-                        <ProtectedRoute>
-                            <SeeEvents />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/see-events"
+          element={
+            <ProtectedRoute>
+              <SeeEvents />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/event/:eventId"
-                    element={
-                        <ProtectedRoute>
-                            <EventDetail />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/event/:eventId"
+          element={
+            <ProtectedRoute>
+              <EventDetail />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/event/:eventId/edit"
-                    element={
-                        <ProtectedRoute>
-                            <EditEvent />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/event/:eventId/edit"
+          element={
+            <ProtectedRoute>
+              <EditEvent />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/event/:eventId/participants"
-                    element={
-                        <ProtectedRoute>
-                            <ParticipantsList />
-                        </ProtectedRoute>
-                    }
-                />
+        <Route
+          path="/event/:eventId/participants"
+          element={
+            <ProtectedRoute>
+              <ParticipantsList />
+            </ProtectedRoute>
+          }
+        />
 
-                <Route
-                    path="/event/:eventId/participants/invite"
-                    element={
-                        <ProtectedRoute>
-                            <InviteGuests />
-                        </ProtectedRoute>
-                    }
-                />
-            </Routes>
-        </Router>
-    );
+        <Route
+          path="/event/:eventId/participants/invite"
+          element={
+            <ProtectedRoute>
+              <InviteGuests />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/event/:eventId/photos"
+          element={
+            <ProtectedRoute>
+              <EventPhotos />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </Router>
+  );
 }
 
 export default App;
-
