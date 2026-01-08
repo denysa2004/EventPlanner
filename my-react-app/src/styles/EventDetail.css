@@ -1,26 +1,36 @@
+/* Event Detail Page Styles */
 .event-detail-container {
-  background: rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
-  padding: 40px 60px;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  width: 600px;
-  max-width: 90%;
+  background: var(--background-white);
+  border-radius: var(--radius-lg);
+  padding: 45px 55px;
+  box-shadow: var(--shadow-lg);
+  width: 100%;
+  max-width: 700px;
+  backdrop-filter: blur(10px);
 }
 
 .detail-section {
   margin: 25px 0;
-  padding: 20px;
-  background: #faf5ff;
-  border-radius: 15px;
-  border: 2px solid #e0c3fc;
+  padding: 22px;
+  background: var(--primary-lightest);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border-color);
+  transition: var(--transition-fast);
+}
+
+.detail-section:hover {
+  border-color: var(--primary-color);
+  box-shadow: var(--shadow-sm);
 }
 
 .detail-item {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 0;
-  border-bottom: 1px solid #e0c3fc;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border-color);
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .detail-item:last-child {
@@ -29,132 +39,185 @@
 
 .detail-label {
   font-weight: 600;
-  color: #b44cff;
-  font-size: 1.1rem;
+  color: var(--primary-color);
+  font-size: 1.05rem;
 }
 
 .detail-value {
-  font-size: 1.1rem;
-  color: #333;
+  font-size: 1.05rem;
+  color: var(--text-primary);
 }
 
 .section-title {
-  color: #b44cff;
-  margin-bottom: 15px;
-  font-size: 1.3rem;
+  color: var(--primary-color);
+  margin-bottom: 18px;
+  font-size: 1.25rem;
+  font-weight: 700;
 }
 
+/* Event description & schedule */
+.event-description {
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 1rem;
+  margin: 0;
+}
+
+.event-schedule {
+  color: var(--text-secondary);
+  line-height: 1.8;
+  font-size: 0.95rem;
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: inherit;
+  background: white;
+  padding: 15px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+/* Organizers Grid */
 .organizers-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 15px;
-  margin-top: 10px;
+  margin-top: 12px;
 }
 
 .organizer-card {
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 18px;
   background: white;
-  border: 2px solid #e0c3fc;
-  border-radius: 12px;
-  transition: all 0.3s ease;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  transition: var(--transition-normal);
 }
 
 .organizer-card:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(180, 76, 255, 0.2);
-  border-color: #b44cff;
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-color);
 }
 
 .organizer-name {
   font-weight: 600;
-  color: #333;
-  margin-bottom: 5px;
+  color: var(--text-primary);
+  margin-bottom: 6px;
   font-size: 1rem;
 }
 
 .organizer-email {
   font-size: 0.9rem;
-  color: #666;
+  color: var(--text-secondary);
 }
 
+/* Button Group */
 .button-group {
   display: flex;
   gap: 15px;
-  margin-top: 30px;
+  margin-top: 35px;
   flex-wrap: wrap;
   justify-content: center;
 }
-button.btn{
-    background:rgb(251, 149, 246);
+
+button.btn,
+button.btn-edit,
+.btn-delete {
+  background: var(--gradient-primary);
   color: white;
   border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  min-width: 140px;
 }
 
-button.btn-edit {
-  background:rgb(251, 149, 246);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
+button.btn:hover,
+button.btn-edit:hover {
+  background: var(--gradient-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
 }
-
-
 
 .btn-delete {
-  background:rgb(251, 149, 246);
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+}
+
+.btn-delete:hover {
+  background: linear-gradient(135deg, #ff4444, #cc3333);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+}
+
+button.bttn {
+  background: var(--gradient-primary);
   color: white;
   border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
-}
-.bttn{
-    background: rgb(247, 4, 235);
-  color: white;
-  border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
-  font-size: 1rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: 0.25s ease;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
-
+button.bttn:hover {
+  background: var(--gradient-primary-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
 
 .event-detail-container .btn1 {
-  background: rgb(244, 162, 211);
-  color: #faf7fc;
-  border: 2px solid #b44cff;
-  padding: 12px 25px;
-  border-radius: 25px;
+  background: var(--gradient-primary);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
-  font-weight: 20px;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
 .event-detail-container .btn1:hover {
-  background: rgb(230, 140, 195);
+  background: var(--gradient-primary-hover);
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(180, 76, 255, 0.3);
+  box-shadow: var(--shadow-md);
 }
 
 .detail-section .map-container {
-    margin-top: 10px;
+  margin-top: 12px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .event-detail-container {
+    padding: 30px 25px;
+    margin: 10px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  button.btn,
+  button.btn-edit,
+  .btn-delete,
+  button.bttn {
+    width: 100%;
+  }
+
+  .organizers-grid {
+    grid-template-columns: 1fr;
+  }
 }

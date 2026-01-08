@@ -1,49 +1,64 @@
+/* Home Page Styles */
 .home-container {
   text-align: center;
   margin-top: 40px;
 }
 
 .title {
-  font-size: 32px;
-  margin-bottom: 30px;
+  font-size: 2rem;
+  margin-bottom: 35px;
+  color: var(--text-primary);
+  font-weight: 600;
 }
 
 .button-form {
   display: flex;
   justify-content: center;
   gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 
 .btn {
-   background: rgb(237, 113, 223);
- color: white;
+  background: var(--gradient-primary);
+  color: white;
   border: none;
-  padding: 12px 25px;
-  border-radius: 25px;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
   font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: 0.25s ease;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
+  min-width: 160px;
 }
 
+.btn:hover {
+  background: var(--gradient-primary-hover);
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:active {
+  transform: translateY(-1px);
+}
 
 .register-form .logout-btn {
-  background: #f79797;
+  background: linear-gradient(135deg, #ff8a8a, #ff6b6b);
   color: white;
   border: none;
-  padding: 10px 0;
-  border-radius: 25px;
-  width: 30%;
-  font-size: 1.1rem;
+  padding: 14px 32px;
+  border-radius: var(--radius-full);
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  margin-top: 15px;
-  transition: 0.25s ease;
+  margin-top: 25px;
+  transition: var(--transition-normal);
+  box-shadow: var(--shadow-sm);
 }
 
-
 .register-form .logout-btn:hover {
-  background: #e60000;
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.3);
+  background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
   transform: translateY(-2px);
 }

@@ -1,38 +1,228 @@
+/* App-level Styles */
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Loading States */
+.loading-spinner {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  border-top-color: white;
+  animation: spin 0.8s ease-in-out infinite;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes spin {
   to {
     transform: rotate(360deg);
   }
+}
+
+/* Global Message Styles */
+.message-error,
+p[style*="color: red"],
+p[style*="color:red"] {
+  color: var(--danger-color) !important;
+  background: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin: 12px 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+.message-success,
+p[style*="color: green"],
+p[style*="color:green"] {
+  color: var(--success-color) !important;
+  background: var(--success-bg);
+  border: 1px solid var(--success-border);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin: 12px 0;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* Loading text */
+p[style*="color: #666"] {
+  color: var(--text-secondary) !important;
+}
+
+/* Utility Classes */
+.text-center {
+  text-align: center;
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+.mt-1 {
+  margin-top: 8px;
+}
+.mt-2 {
+  margin-top: 16px;
+}
+.mt-3 {
+  margin-top: 24px;
+}
+.mb-1 {
+  margin-bottom: 8px;
+}
+.mb-2 {
+  margin-bottom: 16px;
+}
+.mb-3 {
+  margin-bottom: 24px;
+}
+
+/* Focus visible for accessibility */
+:focus-visible {
+  outline: 3px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+/* Smooth transitions for all interactive elements */
+button,
+a,
+input,
+select,
+textarea {
+  transition: var(--transition-fast);
+}
+
+/* Divider style */
+.divider {
+  height: 1px;
+  background: var(--border-color);
+  margin: 25px 0;
+  position: relative;
+}
+
+.divider-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 0 12px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+}
+
+/* Email tag styles for InviteGuests */
+.email-tag {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: var(--primary-lighter);
+  border: 1px solid var(--primary-color);
+  border-radius: var(--radius-full);
+  font-size: 0.9rem;
+  color: var(--text-primary);
+}
+
+.email-tag-remove {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0;
+  line-height: 1;
+  transition: var(--transition-fast);
+}
+
+.email-tag-remove:hover {
+  color: var(--danger-color);
+  transform: scale(1.2);
+}
+
+/* Add button style */
+.btn-add {
+  background: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 12px 24px;
+  transition: var(--transition-normal);
+}
+
+.btn-add:hover {
+  background: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Form row with flex */
+.form-row {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.form-row input {
+  flex: 1;
+}
+
+/* Wider form for InviteGuests */
+.register-form.wide-form {
+  max-width: 700px;
+}
+
+/* File input styling */
+input[type="file"] {
+  padding: 12px;
+  border: 2px dashed var(--border-color);
+  border-radius: var(--radius-md);
+  background: var(--primary-lightest);
+  cursor: pointer;
+  width: 100%;
+  margin: 10px 0;
+  transition: var(--transition-fast);
+}
+
+input[type="file"]:hover {
+  border-color: var(--primary-color);
+  background: var(--primary-lighter);
+}
+
+/* Subtitle for forms */
+.form-subtitle {
+  text-align: center;
+  color: var(--text-secondary);
+  margin-top: -10px;
+  margin-bottom: 20px;
+}
+
+/* Section header in forms */
+.form-section-title {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+  margin: 25px 0 15px;
+  text-align: center;
+}
+
+/* Tags container */
+.tags-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+/* Count label */
+.count-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 10px;
 }

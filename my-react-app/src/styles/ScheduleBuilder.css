@@ -1,39 +1,50 @@
-/* Main Wrapper */
+/* Schedule Builder Styles */
 .schedule-builder {
   margin: 20px 0;
+  width: 100%;
 }
 
 .schedule-label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   font-size: 1rem;
-  color: #333;
-  font-weight: 500;
+  color: var(--text-primary);
+  font-weight: 600;
+  text-align: left;
 }
 
 .schedule-example {
-  font-size: 0.85rem;
-  color: #666;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
   font-style: italic;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
+  text-align: left;
+  padding: 10px 14px;
+  background: var(--primary-lightest);
+  border-radius: var(--radius-sm);
+  border-left: 3px solid var(--primary-color);
 }
 
 .schedule-textarea {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 14px;
+  padding: 14px 18px;
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
   font-family: inherit;
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
+  transition: var(--transition-fast);
+  line-height: 1.6;
+  background: white;
 }
 
 .schedule-textarea:focus {
   outline: none;
-  border-color: #b44cff;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px rgba(180, 76, 255, 0.15);
 }
 
 .schedule-textarea::placeholder {
-  color: #999;
+  color: var(--text-muted);
 }
