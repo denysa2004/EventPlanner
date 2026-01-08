@@ -135,7 +135,8 @@ function SeeEvents() {
                   <strong>Date:</strong> {event.eventDate}
                 </p>
                 <p>
-                  <strong>Location:</strong> {event.location?.address || event.eventLocation}
+                  <strong>Location:</strong>{" "}
+                  {event.location?.address || event.eventLocation}
                 </p>
               </div>
             ))}
@@ -148,43 +149,52 @@ function SeeEvents() {
 
             {invitedEvents.map((event) => (
               <div key={event.eventId} className="event-item">
-                <h3>{event.eventName}</h3>
+                <div
+                  className="clickable"
+                  onClick={() => navigate(`/event/${event.eventId}`)}
+                  style={{ cursor: "pointer" }}
+                >
+                  <h3>{event.eventName}</h3>
 
-                <p>
-                  <strong>Date:</strong> {event.eventDate}
-                </p>
-                <p>
-                  <strong>Location:</strong> {event.location?.address || event.eventLocation}
-                </p>
+                  <p>
+                    <strong>Date:</strong> {event.eventDate}
+                  </p>
+                  <p>
+                    <strong>Location:</strong>{" "}
+                    {event.location?.address || event.eventLocation}
+                  </p>
 
-                <p>
-                  <strong>Status:</strong>{" "}
-                  <span
-                    className={`status ${(
-                      event.invitationStatus || "pending"
-                    ).toLowerCase()}`}
-                  >
-                    {event.invitationStatus}
-                  </span>
-                </p>
+                  <p>
+                    <strong>Status:</strong>{" "}
+                    <span
+                      className={`status ${(
+                        event.invitationStatus || "pending"
+                      ).toLowerCase()}`}
+                    >
+                      {event.invitationStatus}
+                    </span>
+                  </p>
+                </div>
 
                 {event.invitationStatus === "PENDING" && (
                   <div className="invite-actions">
                     <button
                       className="accept-btn"
-                      onClick={() =>
-                        respondToInvitation(event.eventId, "ACCEPTED")
-                      }
-                      style={{width:100}}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        respondToInvitation(event.eventId, "ACCEPTED");
+                      }}
+                      style={{ width: 100 }}
                     >
                       Accept
                     </button>
                     <button
                       className="decline-btn"
-                      onClick={() =>
-                        respondToInvitation(event.eventId, "DECLINED")
-                      }
-                      style={{width:100}}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        respondToInvitation(event.eventId, "DECLINED");
+                      }}
+                      style={{ width: 100 }}
                     >
                       Decline
                     </button>
