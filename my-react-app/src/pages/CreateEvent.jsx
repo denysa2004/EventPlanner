@@ -238,6 +238,7 @@ function CreateEvent() {
         <button
           type="button"
           className="btn1"
+            style={({ marginLeft: "10px" })}
           onClick={() => navigate("/home")}
           disabled={loading}
         >

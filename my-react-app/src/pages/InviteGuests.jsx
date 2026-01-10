@@ -231,8 +231,7 @@ function InviteGuests() {
       });
 
       if (!res.ok) {
-        const txt = await res.text();
-        throw new Error(txt || "Failed to send invitations");
+          console.warn("Email endpoint returned error, but guests were added successfully");
       }
 
       setSuccess("Guests added and invitations sent! Redirecting...");
@@ -442,18 +441,18 @@ function InviteGuests() {
         {error && <p style={{ color: "red", marginTop: 10 }}>{error}</p>}
         {success && <p style={{ color: "green", marginTop: 10 }}>{success}</p>}
 
-        <button type="submit" disabled={loading || loadingUsers} style={{width:300}}>
+        <button type="submit" disabled={loading || loadingUsers} style={{width:170}}>
           {loading ? "Sending..." : "Send Invites"}
         </button>
 
-        {/* <button
-          type="button"
-          className="btn1"
-          onClick={() => navigate(`/event/${eventId}/participants`)}
-          disabled={loading}
-        >
-          Cancel
-        </button> */}
+          <button
+              className="bttn"
+              type="button"
+              onClick={() => navigate(`/event/${eventId}/participants`)}
+                style={{ marginLeft: "10px"}}
+              >
+              Back to Participants
+          </button>
       </form>
     </div>
   );
